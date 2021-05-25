@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { array } from "../data/data"
 import Result from "./Result"
 import Timer from "./Timer"
+import Modal from "react-bootstrap/Modal"
 
 function MainContent() {
 
@@ -12,6 +13,7 @@ function MainContent() {
     const [ansArr, setAnsarr] = useState([...Array(length)].map(x => -1))
 
     const [isSubmitted, setIsSubmitted] = useState(false)
+    const [showSubmit, setShowSubmit] = useState(false)
 
 
     const shift = (direction) => {
@@ -32,46 +34,72 @@ function MainContent() {
 
     }
 
+    const ConfirmatoryModal = (props) => {
+        return <Modal
+            {...props}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+
+
+
+            <Modal.Body>
+                <div className="submit-modal-div-header">
+                    <h4>Are you sure you want to submit?</h4>
+                </div>
+                <div className="submit-modal-buttons-div">
+                    <button className="proceed-btn" onClick={()=>setIsSubmitted(true)}>Yes</button>
+                    <button className="return-to-test-btn" onClick={()=>setShowSubmit(false)}>No</button>
+                </div>
+            </Modal.Body>
+
+
+
+        </Modal>
+    }
+
+
+
     const currentQuestion = <section className="current-ques-sect">
 
-        <header className={index===0?'first-question':'all-other-questions'}>
-            {index > 0 && 
-            
-            <button onClick={() => shift("left")}>
-                <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 8 12 12 16"></polyline><line x1="16" y1="12" x2="8" y2="12"></line></svg>
-            </button>}
-            
-            {index < length - 1 && 
-            
-            <button onClick={() => shift("right")}>
-                <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-            </button>
+        <header className={index === 0 ? 'first-question' : 'all-other-questions'}>
+            {index > 0 &&
+
+                <button onClick={() => shift("left")}>
+                    <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 8 12 12 16"></polyline><line x1="16" y1="12" x2="8" y2="12"></line></svg>
+                </button>}
+
+            {index < length - 1 &&
+
+                <button onClick={() => shift("right")}>
+                    <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                </button>
             }
 
         </header>
 
         <div className="current-ques-body-div">
             <div className="ques-content-div">
-                <h5>Question: {data.question}</h5>
+                <p>{data.question}</p>
             </div>
 
             <div className="ques-options-div">
                 {
                     data.options.map((option, ind) => {
                         return <p>
-                            
+
                             <span className="option-btn"> <button onClick={() => setAnswer(ind)} className={ansArr[index] !== -1 && ansArr[index] === ind ? 'selected-btn' : ''}
-                            
+
                             ></button> </span> {option}
-                            
-                            </p>
+
+                        </p>
                     })
                 }
             </div>
 
             <div className="final-submit-btn-div">
                 <button onClick={() => {
-                    setIsSubmitted(true)
+                    setShowSubmit(true)
                 }}>Submit</button>
             </div>
         </div>
@@ -80,11 +108,11 @@ function MainContent() {
 
 
     const resultSection = <section className="result-side-div">
-        
+
         <div className="side-div-header-icon">
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
         </div>
-        
+
         <div className="side-div-header-text">
             <p>Review answers here</p>
         </div>
@@ -108,8 +136,10 @@ function MainContent() {
 
     return (
         <div className="main-container">
-            <Timer setIsSubmitted={()=>setIsSubmitted(true)}/>
+            <Timer setIsSubmitted={() => setIsSubmitted(true)} />
             <div className="row main-content-row">
+
+                <ConfirmatoryModal show={showSubmit} />
 
                 <div className="col col-md-3 col-sm-12">
                     {resultSection}

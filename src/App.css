@@ -18,6 +18,10 @@
 	padding-bottom: 5%;
 }
 
+.ques-content-div > p {
+	font-size: 18px;
+}
+
 .result-side-div {
 	padding: 10px;
 	border: 2px solid lightgray;
@@ -68,6 +72,7 @@ svg {
 .final-submit-btn-div {
 	display: flex;
 	justify-content: flex-end;
+	margin-top: 20px;
 }
 
 .final-submit-btn-div > button {
@@ -86,10 +91,6 @@ svg {
 
 .current-ques-body-div {
 	margin-top: 20px;
-}
-
-.ques-content-div > p {
-	font-size: 20px;
 }
 
 .timer-row {
@@ -191,14 +192,48 @@ svg {
 }
 
 @media (max-width: 769px) {
-	.main-content-row{
+	.main-content-row {
 		display: flex !important;
 		flex-direction: column;
 	}
 	.main-content-row > .col-sm-12 {
 		margin-top: 40px;
 	}
-    .result-side-div{
+	.result-side-div {
 		height: 300px;
 	}
+	.question-container {
+		height: 550px;
+	}
+}
+
+.submit-modal-div-header {
+	text-align: center;
+}
+
+.modal-header {
+	border-bottom: 0 !important;
+}
+
+.submit-modal-buttons-div {
+	display: flex;
+	justify-content: space-around;
+	margin-top: 25px;
+}
+
+.submit-modal-buttons-div > button {
+	padding: 10px;
+    border: none;
+	font-size: 15px;
+	border-radius: 10px;
+}
+
+.proceed-btn{
+	background-color: green;
+	color: white;
+}
+
+.return-to-test-btn{
+	background-color: crimson;
+	color: white;
 }

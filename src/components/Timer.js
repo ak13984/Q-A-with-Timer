@@ -3,7 +3,7 @@ import React,{useState, useEffect} from 'react'
 export default function Timer(props) {
 
 
-    const [time, setTime] = useState([0, 5, 0])
+    const [time, setTime] = useState([0, 3, 0])
 
     const changeTime = () => {
 
